@@ -28,10 +28,10 @@ costume_intex = 0
 heart = Actor ("heart.png")
 spawn_actor_randomly(heart)
 
-sheild = Actor("sheild.png")
-sheild_active = False
-sheild_timer = 0 
-sheild_visible = False
+shield = Actor("shield.png")
+shield_active = False
+shield_timer = 0 
+shield_visible = False
 wait = 0 
 
 #drawloop
@@ -39,18 +39,18 @@ def draw():
     screen.fill("Light Pink")
     fox.draw()
     heart.draw()
-    if sheild_visible:
-        sheild.draw()
+    if shield_visible:
+        shield.draw()
     
     for ghost in ghost_list:
         ghost.draw()
     screen.draw.text("score: "+ str(score), (20, 20), color = "ivory")
 
-    if sheild_active:
-        screen.draw.text("Sheild Active!", WIDTH - 150, 20), color="yellow"
+    if shield_active:
+        screen.draw.text("Shield Active!", WIDTH - 150, 20), color="yellow"
 #update loop
 def update ():
-    global score, costume_index, wait, sheild_active, sheild_timer, sheild_visible
+    global score, costume_index, wait, shield_active, shield_timer, shield_visible
     fox.image = fox_costumes[costume_index]
     if keyboard.right and fox.x<WIDTH:
         fox.x = fox.x +5
@@ -71,7 +71,7 @@ def update ():
             spawn_actor_randomly(ghost)
 
     for ghost in ghost_list:
-        if sheild_active:
+        if shield_active:
             continue
         
         if fox.colliderect(ghost):
@@ -97,10 +97,10 @@ def update ():
         sheild_timer = 300
         sheild_visible = False
 
-    if sheild_active:
-        sheild_timer -= 1
-        if sheild_timer <=0:
-            sheild_active = False
+    if shield_active:
+        shield_timer -= 1
+        if shield_timer <=0:
+            shield_active = False
 
 
 
