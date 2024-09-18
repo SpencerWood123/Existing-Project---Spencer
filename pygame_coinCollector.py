@@ -21,7 +21,8 @@ for _ in range(1):
     ghost_list.append(ghost)
 
 score = 0
-
+lives = 3 
+game_over = False 
 fox_costumes = ["foxright.png", "foxleft.png"]
 costume_intex = 0
 
@@ -36,21 +37,27 @@ wait = 0
 
 #drawloop
 def draw():
-    screen.fill("Light Pink")
-    fox.draw()
-    heart.draw()
-    if shield_visible:
-        shield.draw()
+    if not game_over: 
+        screen.fill("Light Pink")
+        fox.draw()
+        heart.draw()
+        if shield_visible:
+            shield.draw()
     
     for ghost in ghost_list:
         ghost.draw()
     screen.draw.text("score: "+ str(score), (20, 20), color = "ivory")
+    screen.draw.text("Lives: " + str(lives), (20, 50), color="ivory")
 
     if shield_active:
         screen.draw.text("Shield Active!", WIDTH - 150, 20), color="yellow"
 #update loop
 def update ():
-    global score, costume_index, wait, shield_active, shield_timer, shield_visible
+    global score, costume_index, wait, shield_active, shield_timer, shield_visible, lives, game_over
+    if game_over: 
+        keyboard.r:
+            reset_game()
+        return 
     fox.image = fox_costumes[costume_index]
     if keyboard.right and fox.x<WIDTH:
         fox.x = fox.x +5
@@ -75,7 +82,10 @@ def update ():
             continue
         
         if fox.colliderect(ghost):
-            score = 0
+            lives -= 1
+            if lives <= 0:
+                game_over = True 
+            
             ghost.x = random.randint (0, 600)
             ghost.y = random.randint (0, 600)
             shield_active = False
@@ -101,6 +111,18 @@ def update ():
         shield_timer -= 1
         if shield_timer <=0:
             shield_active = False
+    def reset_game():
+        global, score, lives, game_over, ghost list
+        score = 0
+        lives = 3
+        game_over = False 
+        ghost_list []
+        for _ in range(1):
+            ghost = Actor("ghost2.png")
+            spawn_actor_randomly(ghost)
+            ghost_list.append(ghost)
+        spawn_actor_randomly(heart)
+
 
 
 
