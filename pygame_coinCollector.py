@@ -24,7 +24,7 @@ score = 0
 lives = 3 
 game_over = False 
 fox_costumes = ["foxright.png", "foxleft.png"]
-costume_intex = 0
+costume_index = 0
 
 heart = Actor ("heart.png")
 spawn_actor_randomly(heart)
@@ -50,12 +50,16 @@ def draw():
     screen.draw.text("Lives: " + str(lives), (20, 50), color="ivory")
 
     if shield_active:
-        screen.draw.text("Shield Active!", WIDTH - 150, 20), color="yellow"
+        screen.draw.text("Shield Active!", (WIDTH - 150, 20), color="yellow")
+    else: 
+        screen.fill("black")
+        screen.draw.text("Game Over!", (WIDTH/2, HEIGHT/2), color = "red", fontsize =50)
+        screen.draw.text("Press R to Restart", (WIDTH/2 - 130, HEIGHT/2 + 50), color = "blue", fontsize = 30)
 #update loop
 def update ():
     global score, costume_index, wait, shield_active, shield_timer, shield_visible, lives, game_over
     if game_over: 
-        keyboard.r:
+        if keyboard.r:
             reset_game()
         return 
     fox.image = fox_costumes[costume_index]
@@ -81,7 +85,7 @@ def update ():
         if shield_active:
             continue
         
-        if fox.colliderect(ghost):
+        if fox.colliderectect(ghost):
             lives -= 1
             if lives <= 0:
                 game_over = True 
@@ -112,11 +116,11 @@ def update ():
         if shield_timer <=0:
             shield_active = False
     def reset_game():
-        global, score, lives, game_over, ghost list
+        global score, lives, game_over, ghost_list
         score = 0
         lives = 3
         game_over = False 
-        ghost_list []
+        ghost_list = []
         for _ in range(1):
             ghost = Actor("ghost2.png")
             spawn_actor_randomly(ghost)
